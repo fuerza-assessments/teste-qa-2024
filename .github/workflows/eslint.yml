@@ -1,0 +1,42 @@
+name: Lint and Format
+
+on: [push, pull_request]
+
+env:
+  NEXT_APP_URL: https://forte.fuerza.space
+  NEXTAUTH_URL: https://forte.fuerza.space
+  SLACK_CLIENT_ID: ${{ secrets.SLACK_CLIENT_ID }}
+  NEXT_PUBLIC_ENABLE_IMAGE_UPLOAD: true
+  CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+  CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  SLACK_CLIENT_SECRET: ${{ secrets.SLACK_CLIENT_SECRET }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+  CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+  ENABLE_SLACK_POSTING: ${{ secrets.ENABLE_SLACK_POSTING }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+
+jobs:
+  lint:
+    name: Run Lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: "${{ env.node_version }}"
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Format
+      run: npm run biome:format
+
+    - name: Lint
+      run: npm run biome:lint
+

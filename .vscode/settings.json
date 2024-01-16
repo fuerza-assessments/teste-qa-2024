@@ -1,0 +1,49 @@
+{
+	"search.exclude": {
+		"**/build": true,
+		"**/__snapshots__": true,
+		"**/pnpm-lock.yaml": true,
+		"**/*.tsbuildinfo": true
+	},
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"tailwindCSS.experimental.classRegex": [
+		[
+			"cva(?:<[^>]*>)?(([^)]*))",
+			"[\"'`]([^\"'`]*).*?[\"'`]",
+			"(?:twMerge|twJoin)\\(([^\\);]*)[\\);]"
+		]
+	],
+	"editor.codeActionsOnSave": {
+		"source.addMissingImports": "explicit",
+		"source.organizeImports": "never"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"cSpell.words": [
+		"Authed",
+		"autosize",
+		"beforeunload",
+		"biomejs",
+		"circlegrid",
+		"clsx",
+		"cmdk",
+		"dompurify",
+		"fuerza",
+		"gemoji",
+		"maxage",
+		"mrkdwn",
+		"nums",
+		"OPENAI",
+		"shashum",
+		"superjson",
+		"svgr",
+		"tanstack",
+		"tryfabric",
+		"zustand"
+	]
+}
