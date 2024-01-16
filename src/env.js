@@ -23,13 +23,9 @@ export const env = createEnv({
 			// VERCEL_URL doesn't include `https` so it cant be validated as a URL
 			process.env.VERCEL ? z.string() : z.string().url(),
 		),
-		SLACK_CLIENT_ID: z.string().nullish(),
-		SLACK_CLIENT_SECRET: z.string().nullish(),
 		CLOUDINARY_CLOUD_NAME: z.string(),
 		CLOUDINARY_API_KEY: z.string(),
 		CLOUDINARY_API_SECRET: z.string(),
-		ENABLE_SLACK_POSTING: z.coerce.boolean().default(false).optional(),
-		SLACK_WEBHOOK_URL: process.env.ENABLE_SLACK_POSTING === 'true' ? z.string() : z.string().optional(),
 	},
 
 	/**
@@ -54,13 +50,10 @@ export const env = createEnv({
 		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 		NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? `https://${process.env.VERCEL_URL}`,
 		NEXT_PUBLIC_ENABLE_IMAGE_UPLOAD: process.env.NEXT_PUBLIC_ENABLE_IMAGE_UPLOAD,
-		SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID,
-		SLACK_CLIENT_SECRET: process.env.SLACK_CLIENT_SECRET,
 		CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
 		CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
 		CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
 		ENABLE_SLACK_POSTING: process.env.ENABLE_SLACK_POSTING,
-		SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL,
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
