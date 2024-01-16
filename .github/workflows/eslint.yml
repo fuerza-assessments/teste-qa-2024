@@ -3,8 +3,7 @@ name: Lint and Format
 on: [push, pull_request]
 
 env:
-  NEXT_APP_URL: https://forte.fuerza.space
-  NEXTAUTH_URL: https://forte.fuerza.space
+  NEXTAUTH_URL: https://qa-24.fuerza.space
   SLACK_CLIENT_ID: ${{ secrets.SLACK_CLIENT_ID }}
   NEXT_PUBLIC_ENABLE_IMAGE_UPLOAD: true
   CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}

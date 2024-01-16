@@ -14,7 +14,6 @@ export const env = createEnv({
 		GITHUB_ID: z.string().nullish(),
 		GITHUB_SECRET: z.string().nullish(),
 		NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-		NEXT_APP_URL: z.string().url(),
 		NEXTAUTH_SECRET: process.env.NODE_ENV === 'production' ? z.string() : z.string().optional(),
 		NEXTAUTH_URL: z.preprocess(
 			// This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
@@ -46,7 +45,6 @@ export const env = createEnv({
 		GITHUB_ID: process.env.GITHUB_ID,
 		GITHUB_SECRET: process.env.GITHUB_SECRET,
 		NODE_ENV: process.env.NODE_ENV,
-		NEXT_APP_URL: process.env.NEXT_APP_URL,
 		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 		NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? `https://${process.env.VERCEL_URL}`,
 		NEXT_PUBLIC_ENABLE_IMAGE_UPLOAD: process.env.NEXT_PUBLIC_ENABLE_IMAGE_UPLOAD,
