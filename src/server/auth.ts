@@ -2,7 +2,6 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { type Role } from '@prisma/client'
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
-import SlackProvider from 'next-auth/providers/slack'
 
 import { env } from '~/env.js'
 import { db } from '~/server/db'
@@ -26,50 +25,19 @@ declare module 'next-auth' {
 	}
 }
 
-const slack = [
-	...(process.env.NODE_ENV === 'production'
-		? [
-				SlackProvider({
-					clientId: env.SLACK_CLIENT_ID ?? '',
-					clientSecret: env.SLACK_CLIENT_SECRET ?? '',
-					wellKnown: 'https://slack.com/.well-known/openid-configuration',
-					authorization: { params: { scope: 'openid email profile' } },
-				}),
-		  ]
-		: []),
-]
-
 const github = [
-	...(process.env.NODE_ENV === 'development'
-		? [
-				GithubProvider({
-					clientId: env.GITHUB_ID ?? '',
-					clientSecret: env.GITHUB_SECRET ?? '',
-					authorization: 'https://github.com/login/oauth/authorize?scope=read:user+user:email+read:org',
-					userinfo: {
-						url: 'https://api.github.com/user',
-						async request({ client, tokens }) {
-							const profile = await client.userinfo(tokens.access_token ?? '')
-
-							const res = await fetch('https://api.github.com/user/orgs', {
-								headers: {
-									Authorization: `token ${tokens.access_token}`,
-								},
-							})
-
-							const userOrgs = (await res.json()) as { login: string }[]
-
-							// Set flag to deny signIn if allowed org is not found in the user organizations
-							if (!userOrgs.find(org => org.login === env.GITHUB_ALLOWED_ORG)) {
-								profile.notAllowed = true
-							}
-
-							return profile
-						},
-					},
-				}),
-		  ]
-		: []),
+	GithubProvider({
+		clientId: env.GITHUB_ID ?? '',
+		clientSecret: env.GITHUB_SECRET ?? '',
+		authorization: 'https://github.com/login/oauth/authorize?scope=read:user+user:email+read:org',
+		userinfo: {
+			url: 'https://api.github.com/user',
+			async request({ client, tokens }) {
+				const profile = await client.userinfo(tokens.access_token ?? '')
+				return profile
+			},
+		},
+	}),
 ]
 
 /**
@@ -91,7 +59,7 @@ export const authOptions: NextAuthOptions = {
 		},
 	},
 	adapter: PrismaAdapter(db),
-	providers: [...slack, ...github],
+	providers: [...github],
 	pages: {
 		signIn: '/sign-in',
 		signOut: '/sign-in',
